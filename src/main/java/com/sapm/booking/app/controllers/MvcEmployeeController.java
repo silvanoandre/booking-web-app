@@ -2,6 +2,7 @@ package com.sapm.booking.app.controllers;
 
 
 import com.sapm.booking.app.model.Employee;
+import com.sapm.booking.app.model.Product;
 import com.sapm.booking.app.model.Room;
 import com.sapm.booking.app.service.EmployeeService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -99,11 +100,14 @@ public class MvcEmployeeController {
     @PostMapping("/delete/{id}")
     public String deleteEmployee(@PathVariable("id") Long id) {
 
-        if (employeeService.existById(id)) {
-            employeeService.deleteById(id);
+        // Retrieve the existing Room entity by its ID
+        Employee existingEmployee = employeeService.findById(id)
+                .orElseThrow(() -> new RuntimeException("Employee not found"));
 
-        }
+        employeeService.delete(existingEmployee);
+
         return "redirect:/employees";
 
     }
+
 }

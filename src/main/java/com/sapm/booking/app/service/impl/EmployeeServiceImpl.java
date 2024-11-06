@@ -2,6 +2,7 @@ package com.sapm.booking.app.service.impl;
 
 import com.sapm.booking.app.model.Employee;
 import com.sapm.booking.app.model.Person;
+import com.sapm.booking.app.model.Product;
 import com.sapm.booking.app.repositories.EmployeeRepository;
 import com.sapm.booking.app.repositories.PersonRepository;
 import com.sapm.booking.app.service.EmployeeService;
@@ -42,6 +43,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public boolean existById(Long id) {
         return employeeRepository.existsById(id);
+    }
+
+    @Override
+    public Optional<Employee> findById(Long id) {
+        return employeeRepository.findById(id);
     }
 
 

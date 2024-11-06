@@ -23,6 +23,14 @@ public class Employee {
     private BigDecimal salary;
     private String access;
 
+    @Override
+    public String toString() {
+        return "Employee{id=" + id +
+                ", salary=" + salary +
+                ", access='" + access + '\'' +
+                ", personId=" + (person != null ? person.getId() : null) + '}';
+    }
+
 
 }
 

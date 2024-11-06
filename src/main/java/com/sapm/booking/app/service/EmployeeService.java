@@ -1,8 +1,11 @@
 package com.sapm.booking.app.service;
 
 import com.sapm.booking.app.model.Employee;
+import com.sapm.booking.app.model.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import java.util.Optional;
 
 
 public interface EmployeeService {
@@ -13,6 +16,8 @@ public interface EmployeeService {
     Employee getEmployeeById(Long id);
 
     boolean existById(Long id);
+
+    Optional<Employee> findById(Long id);
 
     Page<Employee> getAll(Pageable pageable);
 

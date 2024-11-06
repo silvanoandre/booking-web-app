@@ -3,13 +3,11 @@ package com.sapm.booking.app.audit;
 import com.sapm.booking.app.model.AuditRecord;
 import com.sapm.booking.app.repositories.AuditRecordRepository;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Aspect
 @Component
@@ -46,17 +44,6 @@ public class DatabaseAuditAspect {
                 LocalDateTime.now());
     }
 
-    @Before(
-            "execution(* com.sapm.booking.app.service.*Service.delete(..)) && args(entity)")
-    public void beforeDeleteOperation(Object entity) {
-        saveAuditRecord(
-                getEntityName(entity),
-                "DELETE",
-                getEntityId(entity),
-                getUsername(),
-                entity.toString(),
-                LocalDateTime.now());
-    }
 
     @After(
             "execution(* com.sapm.booking.app.service.*Service.delete(..)) && args(entity)")
@@ -69,24 +56,6 @@ public class DatabaseAuditAspect {
                 entity.toString(),
                 LocalDateTime.now());
     }
-
-    @Around(
-            "execution(* com.sapm.booking.app.service.*Service.delete(..)) && args(entity)")
-    public Object aroundDeleteOperation(ProceedingJoinPoint joinPoint, Object entity) throws Throwable {
-        // Capturar datos antes de la eliminación
-        saveAuditRecord(
-                getEntityName(entity),
-                "DELETE",
-                getEntityId(entity),
-                getUsername(),
-                entity.toString(),
-                LocalDateTime.now());
-
-        // Continuar con la eliminación
-        return joinPoint.proceed();
-    }
-
-
 
 
     // For future use when implementing security in the API gateway micro-service

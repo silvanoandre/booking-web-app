@@ -32,8 +32,20 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public Room update(Room Room) {
-        return roomRepository.save(Room);
+    public Room update(Room updatedRoom) {
+        // Retrieve the existing Room entity by its ID
+        Room existingRoom = roomRepository.findById(updatedRoom.getId())
+                .orElseThrow(() -> new RuntimeException("Room not found"));
+
+        // Update only specific properties
+        existingRoom.setDescription(updatedRoom.getDescription());
+        existingRoom.setCharacteristics(updatedRoom.getCharacteristics());
+        existingRoom.setDailyPrice(updatedRoom.getDailyPrice());
+        existingRoom.setRoomType(updatedRoom.getRoomType());
+        existingRoom.setStatus(updatedRoom.getStatus());
+
+        // Save the updated entity
+        return roomRepository.save(existingRoom);
     }
 
     @Override

@@ -65,9 +65,6 @@ public class MvcProductController {
         return "redirect:/products";
     }
 
-
-
-
     @GetMapping
     public String getAllProducts(@PageableDefault(size = 1000) Pageable pageable,
                                  @RequestParam(name = "status", required = false) String status,
@@ -86,9 +83,15 @@ public class MvcProductController {
 
     @PostMapping("/delete/{id}")
     public String deleteProduct(@PathVariable("id") Long id) {
-        productService.deleteById(id);
+
+        // Retrieve the existing Room entity by its ID
+        Product existingProduct = productService.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+
+        productService.delete(existingProduct);
         return "redirect:/products";
     }
+
 
     @PostMapping("/upload")
     public String handleFileUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {

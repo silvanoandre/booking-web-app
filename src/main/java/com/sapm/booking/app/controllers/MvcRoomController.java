@@ -1,6 +1,5 @@
 package com.sapm.booking.app.controllers;
 
-import com.sapm.booking.app.model.Product;
 import com.sapm.booking.app.model.Room;
 import com.sapm.booking.app.service.RoomService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -88,7 +87,12 @@ public class MvcRoomController {
 
     @PostMapping("/delete/{id}")
     public String deleteRoom(@PathVariable("id") Long id) {
-        roomService.deleteById(id);
+
+        // Retrieve the existing Room entity by its ID
+        Room existingRoom = roomService.findById(id)
+                .orElseThrow(() -> new RuntimeException("Room not found"));
+
+        roomService.delete(existingRoom);
         return "redirect:/rooms";
     }
 

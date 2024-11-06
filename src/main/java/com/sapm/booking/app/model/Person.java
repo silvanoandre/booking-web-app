@@ -29,5 +29,12 @@ public class Person {
     @OneToOne(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Employee employee;
 
+    @Override
+    public String toString() {
+        return "Person{id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' + '}';
+    }
+
 }
 

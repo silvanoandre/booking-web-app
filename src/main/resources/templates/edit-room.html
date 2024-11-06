@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Room</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div th:replace="fragments/navbar"></div>
+
+<div class="container mt-4">
+    <h1>Edit Room</h1>
+    <form th:action="@{/rooms/edit/{id}(id=${room.id})}" th:object="${room}" method="post">
+        <fieldset class="bg-light">
+            <legend>Edit Room</legend>
+            <div class="form-group">
+                <label for="number">Number</label>
+                <input type="text" class="form-control" id="number" th:field="*{number}">
+                <div class="text-danger" th:if="${#fields.hasErrors('number')}" th:errors="*{number}"></div>
+            </div>
+            <div class="form-group">
+                <label for="floor">Floor</label>
+                <input type="text" class="form-control" id="floor" th:field="*{floor}">
+                <div class="text-danger" th:if="${#fields.hasErrors('floor')}" th:errors="*{floor}"></div>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <input type="text" class="form-control" id="description" th:field="*{description}">
+            </div>
+            <div class="form-group">
+                <label for="characteristics">Characteristics</label>
+                <input type="text" class="form-control" id="characteristics" th:field="*{characteristics}">
+            </div>
+            <div class="form-group">
+                <label for="dailyPrice">Daily Price</label>
+                <input type="text" class="form-control" id="dailyPrice" th:field="*{dailyPrice}"
+                       placeholder="Enter daily price" pattern="[0-9]+([\.][0-9]{1,2})?"
+                       title="Please enter a valid price (e.g., 100.00)">
+
+                <div class="text-danger" th:if="${#fields.hasErrors('dailyPrice')}" th:errors="*{dailyPrice}"></div>
+            </div>
+            <div class="form-group">
+                <label for="roomType">Room Type</label>
+                <input type="text" class="form-control" id="roomType" th:field="*{roomType}">
+            </div>
+            <div class="form-group">
+                <label for="status">Status</label>
+                <select class="form-control" id="status" th:field="*{status}" required>
+                    <option value="Available" th:selected="${room.status == 'Available'}">Available</option>
+                    <option value="Booked" th:selected="${room.status == 'Booked'}">Booked</option>
+                </select>
+            </div>
+        </fieldset>
+
+        <button type="submit" class="btn btn-primary">Update Room</button>
+    </form>
+    <a th:href="@{/rooms}" class="btn btn-secondary mt-3">Back to Room List</a>
+</div>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Bootstrap JavaScript -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Employee</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div th:replace="fragments/navbar"></div>
+
+<div class="container mt-4">
+    <h1>Edit Employee</h1>
+    <form th:action="@{/employees/edit/{id}(id=${employee.id})}" th:object="${employee}" method="post">
+        <fieldset class="bg-light">
+            <legend>Personal Information</legend>
+            <div class="form-group">
+                <label for="name">First Name</label>
+                <input type="text" class="form-control" id="name" th:field="*{person.name}" required>
+                <div class="text-danger" th:if="${#fields.hasErrors('person.name')}" th:errors="*{person.name}"></div>
+            </div>
+            <div class="form-group">
+                <label for="middleName">Middle Name</label>
+                <input type="text" class="form-control" id="middleName" th:field="*{person.middleName}">
+                <div class="text-danger" th:if="${#fields.hasErrors('person.middleName')}" th:errors="*{person.middleName}"></div>
+            </div>
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" class="form-control" id="lastName" th:field="*{person.lastName}" required>
+                <div class="text-danger" th:if="${#fields.hasErrors('person.lastName')}" th:errors="*{person.lastName}"></div>
+            </div>
+            <div class="form-group">
+                <label for="documentType">Document Type</label>
+                <select class="form-control" id="documentType" th:field="*{person.documentType}" required>
+                    <option value="PASSPORT" th:selected="${employee.person.documentType == 'PASSPORT'}">Passport</option>
+                    <option value="CEDULA" th:selected="${employee.person.documentType == 'CEDULA'}">Cedula</option>
+                    <option value="DRIVER_LICENSE" th:selected="${employee.person.documentType == 'DRIVER_LICENSE'}">Driver License</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="documentNumber">Document Number</label>
+                <input type="text" class="form-control" id="documentNumber" th:field="*{person.documentNumber}" required>
+                <div class="text-danger" th:if="${#fields.hasErrors('person.documentNumber')}" th:errors="*{person.documentNumber}"></div>
+            </div>
+            <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" class="form-control" id="address" th:field="*{person.address}" required>
+                <div class="text-danger" th:if="${#fields.hasErrors('person.address')}" th:errors="*{person.address}"></div>
+            </div>
+            <div class="form-group">
+                <label for="state">State</label>
+                <select class="form-control" id="state" th:field="*{person.state}" required>
+                    <option value="ACTIVE" th:selected="${employee.person.state == 'ACTIVE'}">Active</option>
+                    <option value="INACTIVE" th:selected="${employee.person.state == 'INACTIVE'}">Inactive</option>
+                </select>
+            </div>
+        </fieldset>
+
+        <fieldset class="bg-light mt-4">
+            <legend>Employee Details</legend>
+            <div class="form-group">
+                <label for="salary">Salary</label>
+                <input type="number" class="form-control" id="salary" th:field="*{salary}" required>
+                <div class="text-danger" th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}"></div>
+            </div>
+            <div class="form-group">
+                <label for="access">Access</label>
+                <select class="form-control" id="access" th:field="*{access}" required>
+                    <option value="Admin" th:selected="${employee.access == 'Admin'}">Admin</option>
+                    <option value="Guest" th:selected="${employee.access == 'Guest'}">Guest</option>
+                    <option value="User" th:selected="${employee.access == 'User'}">User</option>
+                </select>
+            </div>
+        </fieldset>
+
+        <button type="submit" class="btn btn-primary">Update Employee</button>
+    </form>
+    <a th:href="@{/employees}" class="btn btn-secondary mt-3">Back to Employee List</a>
+</div>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Bootstrap JavaScript -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

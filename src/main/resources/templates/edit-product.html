@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Product</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div th:replace="fragments/navbar"></div>
+
+<div class="container mt-4">
+    <h1>Edit Product</h1>
+    <form th:action="@{/products/edit/{id}(id=${product.id})}" th:object="${product}" method="post">
+        <fieldset class="bg-light">
+            <legend>Edit Product</legend>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" th:field="*{name}">
+                <div class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+            </div>
+            <div class="form-group">
+                <label for="description">Floor</label>
+                <input type="text" class="form-control" id="description" th:field="*{description}">
+                <div class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+            </div>
+            <div class="form-group">
+                <label for="unitOfMeasurement">Unit of Measurement</label>
+                <select class="form-control" id="unitOfMeasurement" th:field="*{unitOfMeasurement}" required>
+                    <option value="Bottle" th:selected="${product.unitOfMeasurement == 'Bottle'}">Bottle</option>
+                    <option value="Piece" th:selected="${product.unitOfMeasurement == 'Piece'}">Piece</option>
+                    <option value="Pair" th:selected="${product.unitOfMeasurement == 'Pair'}">Pair</option>
+                    <option value="Bag" th:selected="${product.unitOfMeasurement == 'Bag'}">Bag</option>
+                    <option value="Pack" th:selected="${product.unitOfMeasurement == 'Pack'}">Pack</option>
+                    <option value="Stick" th:selected="${product.unitOfMeasurement == 'Stick'}">Stick</option>
+                    <option value="Jar" th:selected="${product.unitOfMeasurement == 'Jar'}">Jar</option>
+                    <option value="Tube" th:selected="${product.unitOfMeasurement == 'Tube'}">Tube</option>
+                    <option value="Set" th:selected="${product.unitOfMeasurement == 'Set'}">Set</option>
+                    <option value="kit" th:selected="${product.unitOfMeasurement == 'kit'}">Kit</option>
+                    <option value="Kit" th:selected="${product.unitOfMeasurement == 'Kit'}">Kit</option>
+                    <option value="Roll" th:selected="${product.unitOfMeasurement == 'Roll'}">Roll</option>
+                    <option value="Bar" th:selected="${product.unitOfMeasurement == 'Bar'}">Bar</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="price">Price</label>
+                <input type="text" class="form-control" id="price" th:field="*{price}"
+                       placeholder="Enter price" pattern="[0-9]+([\.][0-9]{1,2})?"
+                       title="Please enter a valid price (e.g., 100.00)">
+
+                <div class="text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
+            </div>
+
+        </fieldset>
+
+        <button type="submit" class="btn btn-primary">Update Product</button>
+    </form>
+    <a th:href="@{/products}" class="btn btn-secondary mt-3">Back to Product List</a>
+</div>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Bootstrap JavaScript -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

@@ -3,6 +3,8 @@ package com.sapm.booking.app.model;
 import lombok.Data;
 
 import jakarta.persistence.*;
+import lombok.ToString;
+
 import java.math.BigDecimal;
 
 @Entity
@@ -17,20 +19,11 @@ public class Employee {
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @MapsId
     @JoinColumn(name = "person_id")
+    @ToString.Exclude  // Exclude the 'person' field from toString() to prevent recursion
     private Person person;
 
 
     private BigDecimal salary;
     private String access;
-
-    @Override
-    public String toString() {
-        return "Employee{id=" + id +
-                ", salary=" + salary +
-                ", access='" + access + '\'' +
-                ", personId=" + (person != null ? person.getId() : null) + '}';
-    }
-
-
 }
 
